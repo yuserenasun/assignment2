@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
@@ -24,10 +24,13 @@ public class EmployeeController {
     // handle 'GET' all the employees request
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+        try {
+            List<Employee> employees = employeeService.getAllEmployees();
+            return new ResponseEntity<>(employees, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 }
 
 

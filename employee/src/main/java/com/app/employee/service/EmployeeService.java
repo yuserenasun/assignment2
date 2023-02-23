@@ -12,19 +12,20 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private List<Employee> employees;
+    private final List<Employee> employees;
+    private final ObjectMapper objectMapper;
 
     public EmployeeService() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        this.objectMapper = new ObjectMapper();
         try {
             // Read the JSON file and extract the "employee" array
-            JsonNode rootNode = objectMapper.readTree(new File("src/main/resources/json/employee.json"));
+            JsonNode rootNode = this.objectMapper.readTree(new File("src/main/resources/json/employee.json"));
             JsonNode employeesNode = rootNode.path("record").path("employee");
 
             // Convert the "employee" array to a List<Employee>
             employees = objectMapper.convertValue(employeesNode, new TypeReference<List<Employee>>(){});
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error reading employee data from file", e);
         }
     }
 

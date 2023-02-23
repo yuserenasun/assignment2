@@ -9,6 +9,7 @@
 1. Run EmployeeApplication in one terminal.
 1. Under employeeApp folder, run `ng serve` in another terminal.
 1. access https://localhost:4200 in your browser.
+
 In this app, the backend server port is 8090.
 
 ### TODO
